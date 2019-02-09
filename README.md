@@ -1,16 +1,18 @@
 # GAWS - General Ada Web Server
 
-## Requirements
+## Dependencies
 
-* AWS - Ada Web Server
+* Aws - Ada Web Server
 * Simple_Components - For SQLite3 and SQLite3 binding
 
 ## Configuring
 **$** cd source-var
 
-**$** edit PROGRAM_VERSION
+**$** edit var/PROGRAM_NAME
 
-**$** ./create-setup-ads.sh
+**$** edit var/PROGRAM_VERSION
+
+**$** make setup
 
 ## Building
 **$** make
