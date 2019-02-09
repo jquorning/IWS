@@ -13,11 +13,12 @@ with Ada.Command_Line;
 with Command_Line;
 with Setup;
 with Options;
+with Exceptions;
 
 procedure GAWS_Program is
 
    procedure Show_Help;
-   --  Show help text to terminal.
+   --  Put help text to terminal.
 
    procedure Show_Help
    is
@@ -40,30 +41,25 @@ procedure GAWS_Program is
    end Show_Help;
 
    use Ada.Command_Line;
-   use Command_Line;
 
-   Status : Process_Result;
+   Success : Boolean;
 begin
-   Process_Command_Line (Status);
 
-   case Status is
+   Command_Line.Parse (Success);
 
-      when Command_Line.Success  =>
-         Set_Exit_Status (Ada.Command_Line.Success);
+   if not Success then
+      Set_Exit_Status (Ada.Command_Line.Failure);
+      return;
+   end if;
 
-      when Command_Line.Failure  =>
-         Set_Exit_Status (Ada.Command_Line.Failure);
-         return;
+   if  Options.Show_Version then
+      Show_Help;
+      return;
+   end if;
 
-      when Command_Line.Bailout  =>
-         if Options.Show_Version then
-            Show_Help;
-         end if;
-         Set_Exit_Status (Ada.Command_Line.Success);
-         return;
+exception
 
-   end case;
-
-   Ada.Command_Line.Set_Exit_Status (Ada.Command_Line.Success);
+   when Occurrence : others =>
+      Exceptions.Put (Occurrence);
 
 end GAWS_Program;

@@ -20,4 +20,6 @@ package Options is
    Database_File : aliased String_Access := new String'("");
    TCP_IP_Port   : aliased String_Access := new String'("80");
 
+--   procedure Dump;
+
 end Options;

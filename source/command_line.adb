@@ -7,7 +7,7 @@
 --    May you share freely, not taking more than you give.
 --
 
-with Ada.Text_IO;
+--  with Ada.Text_IO;
 
 with GNAT.Command_Line;
 
@@ -15,31 +15,16 @@ with Options;
 
 package body Command_Line is
 
-   procedure Getopt_Callback
-     (Switch  : String;  Param : String;  Section : String);
-   --  To be installed and called by Getopt on command line switch encounter.
-
-
    Long_Switch_Show_Help     : constant String := "--help";
    Long_Switch_Show_Version  : constant String := "--version";
-   Long_Switch_Web_Directory : constant String := "--directory";
-   Long_Switch_TCP_IP_Port   : constant String := "--port";
-   Long_Switch_Host_Name     : constant String := "--hostname";
-   Long_Switch_Database_File : constant String := "--database";
+   Long_Switch_Web_Directory : constant String := "--directory=";
+   Long_Switch_TCP_IP_Port   : constant String := "--port=";
+   Long_Switch_Host_Name     : constant String := "--hostname=";
+   Long_Switch_Database_File : constant String := "--database=";
 
---   use GNAT.Command_Line;
    Config : GNAT.Command_Line.Command_Line_Configuration;
 
-
-   procedure Getopt_Callback (Switch, Param, Section : String) is
-   begin
-      Ada.Text_IO.Put_Line ("Switch : " & Switch);
-      Ada.Text_IO.Put_Line ("Param  : " & Param);
-      Ada.Text_IO.Put_Line ("Section: " & Section);
-   end Getopt_Callback;
-
-
-   procedure Process_Command_Line (Result : out Process_Result)
+   procedure Parse (Success : out Boolean)
    is
       use GNAT.Command_Line;
       use Options;
@@ -64,32 +49,21 @@ package body Command_Line is
                      Long_Switch => Long_Switch_Database_File);
 
       --  Do the whole parsing business.
-      --  Actually just the -D= option and file name.
-      --  Getopt (Config, Getopt_Callback'Access);
       Getopt (Config);
 
-      if Options.Show_Help then
-         Result := Bailout;
-
-      elsif Options.Show_Version then
-         Result := Bailout;
-
-      end if;
+      Success := True;
 
    exception
 
-      when Invalid_Switch =>
-         Ada.Text_IO.Put_Line ("INVALID_SWITCH");
+      when
+        Invalid_Switch         |
+        Invalid_Parameter      |
+        Exit_From_Command_Line =>
 
-      when Invalid_Parameter =>
-         Ada.Text_IO.Put_Line ("INVALID_PARAMETER");
-         Result := Failure;
+         Success := False;
+         raise;
 
-      when Exit_From_Command_Line =>
-         Ada.Text_IO.Put_Line ("EXIt_FROM_COMMAND_LINE");
-         Result := Bailout;
-
-   end Process_Command_Line;
+   end Parse;
 
 
 end Command_Line;

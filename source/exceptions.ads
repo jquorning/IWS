@@ -7,10 +7,12 @@
 --    May you share freely, not taking more than you give.
 --
 
-package Command_Line is
+with Ada.Exceptions;
 
-   procedure Parse
-     (Success : out Boolean);
-   --  Process command line setting variables.
+package Exceptions is
 
-end Command_Line;
+   procedure Put
+     (Occurrence : Ada.Exceptions.Exception_Occurrence);
+   --  Put information about Occurence to the terminal.
+
+end Exceptions;
