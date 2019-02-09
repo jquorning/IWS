@@ -7,20 +7,17 @@
 --    May you share freely, not taking more than you give.
 --
 
---  with Ada.Text_IO;
-
 with GNAT.Command_Line;
 
 with Options;
 
 package body Command_Line is
 
-   Long_Switch_Show_Help     : constant String := "--help";
-   Long_Switch_Show_Version  : constant String := "--version";
-   Long_Switch_Web_Directory : constant String := "--directory=";
-   Long_Switch_TCP_IP_Port   : constant String := "--port=";
-   Long_Switch_Host_Name     : constant String := "--hostname=";
-   Long_Switch_Database_File : constant String := "--database=";
+   Long_Switch_Show_Help    : constant String := "--help";
+   Long_Switch_Show_Version : constant String := "--version";
+   Long_Switch_Web_Dir_Base : constant String := "--web-base=";
+   Long_Switch_TCP_IP_Port  : constant String := "--port=";
+   Long_Switch_Host_List    : constant String := "--host-list=";
 
    Config : GNAT.Command_Line.Command_Line_Configuration;
 
@@ -35,18 +32,15 @@ package body Command_Line is
       Define_Switch (Config, Show_Version'Access,
                      Help        => "Show program name and version.",
                      Long_Switch => Long_Switch_Show_Version);
-      Define_Switch (Config, Web_Directory'Access, "-d=",
-                     Help        => "Static web directory.",
-                     Long_Switch => Long_Switch_Web_Directory);
-      Define_Switch (Config, TCP_IP_Port'Access, "-p=",
+      Define_Switch (Config, Web_Dir_Base'Access, "-w=", Argument => "DIR",
+                     Help        => "Base of web directory strcture.",
+                     Long_Switch => Long_Switch_Web_Dir_Base);
+      Define_Switch (Config, TCP_IP_Port'Access, "-p=", Argument => "PORT",
                      Help        => "Web server listen port.",
                      Long_Switch => Long_Switch_TCP_IP_Port);
-      Define_Switch (Config, Host_Name'Access, "-h=",
-                     Help        => "Host name to serve.",
-                     Long_Switch => Long_Switch_Host_Name);
-      Define_Switch (Config, Database_File'Access, "-b=",
-                     Help        => "SQLite3 Database file.",
-                     Long_Switch => Long_Switch_Database_File);
+      Define_Switch (Config, Host_List_File'Access, "-h=", Argument => "FILE",
+                     Help        => "List of hosts to serve.",
+                     Long_Switch => Long_Switch_Host_List);
 
       --  Do the whole parsing business.
       Getopt (Config);

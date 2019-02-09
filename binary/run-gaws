@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd $HOME/Projekt/GAWS/web
+../binary/gaws $1

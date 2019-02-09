@@ -9,17 +9,19 @@
 
 with GNAT.Strings;
 
+with Setup;
+
 package Options is
 
    Show_Version  : aliased Boolean;
    Show_Help     : aliased Boolean;
 
-   use GNAT.Strings;
-   Web_Directory : aliased String_Access := new String'("");
-   Host_Name     : aliased String_Access := new String'("");
-   Database_File : aliased String_Access := new String'("");
-   TCP_IP_Port   : aliased String_Access := new String'("80");
+   Default_Host_List_File : constant String := Setup.Get_Program_Name & ".hosts";
+   Default_TCP_IP_Port    : constant String := "8080";
 
---   procedure Dump;
+   use GNAT.Strings;
+   Web_Dir_Base   : aliased String_Access := new String'("");
+   Host_List_File : aliased String_Access := new String'(Default_Host_List_File);
+   TCP_IP_Port    : aliased String_Access := new String'(Default_TCP_IP_Port);
 
 end Options;
