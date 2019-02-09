@@ -6,19 +6,19 @@
 * Simple_Components - For SQLite3 and SQLite3 binding
 
 ## Configuring
-**$** cd source-var
-
-**$** edit var/PROGRAM_NAME
-
-**$** edit var/PROGRAM_VERSION
-
-**$** make setup
+```sh
+cd source-var
+edit var/PROGRAM_NAME
+edit var/PROGRAM_VERSION
+make setup
+```
 
 ## Building
-**$** make
-
+```sh
+make
+```
 or
-
-**$** gprbuild gaws.gpr
-
+```sh
+gprbuild
+```
 
