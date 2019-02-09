@@ -10,7 +10,6 @@ Initial
 
 ## Configuring
 ```sh
-cd source-var
 edit var/PROGRAM_NAME
 edit var/PROGRAM_VERSION
 make setup
