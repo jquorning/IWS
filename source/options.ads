@@ -11,15 +11,13 @@ with GNAT.Strings;
 
 package Options is
 
+   Show_Version  : aliased Boolean;
+   Show_Help     : aliased Boolean;
+
    use GNAT.Strings;
-
-   Option_Show_Version  : aliased Boolean;
-   Option_Show_Help     : aliased Boolean;
-
-   Option_Web_Directory : aliased String_Access := new String'("");
-   Option_Host_Name     : aliased String_Access := new String'("");
-   Option_Database_File : aliased String_Access := new String'("");
-
-   Option_TCP_IP_Port   : aliased Integer;
+   Web_Directory : aliased String_Access := new String'("");
+   Host_Name     : aliased String_Access := new String'("");
+   Database_File : aliased String_Access := new String'("");
+   TCP_IP_Port   : aliased String_Access := new String'("80");
 
 end Options;
