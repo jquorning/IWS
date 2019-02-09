@@ -1,5 +1,4 @@
-# Object file
-*.o
-
-# Ada Library Information
-*.ali
+.gitignore
+.object/
+binary/
+source-var/setup.adb
