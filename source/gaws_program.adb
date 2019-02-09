@@ -14,6 +14,7 @@ with Command_Line;
 with Setup;
 with Options;
 with Exceptions;
+with Program;
 
 procedure GAWS_Program is
 
@@ -56,6 +57,8 @@ begin
       Show_Help;
       return;
    end if;
+
+   Program.Run;
 
 exception
 

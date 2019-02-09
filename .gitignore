@@ -1,4 +1,4 @@
 .gitignore
 .object/
-binary/
+binary/gaws
 source/setup.adb

@@ -9,6 +9,8 @@
 -- GAWS GPR project file
 --
 
+with "AWS";
+
 project GAWS is
 
   for Languages    use ("Ada");
@@ -25,7 +27,7 @@ project GAWS is
         "-gnatf",
         "-gnatwa",
         "-gnatwj",
-        "-gnat2005",
+        "-gnat2012",
         "-gnaty",
         "-gnatyM99");
 
