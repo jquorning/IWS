@@ -23,11 +23,12 @@ procedure GAWS_Program is
    is
       use Ada.Text_IO, Setup;
       Version : constant String :=
-        Program_Name & " (" &
-        Get_Program_Version & ") Build (" &
-        Get_Build_ISO8601 & ")";
+        Get_Program_Name & " (" & Get_Program_Version & ")";
+      Build : constant String :=
+        "Build (" & Get_Build_ISO8601_UTC & ")";
    begin
       Put_Line (Version);
+      Put_Line (Build);
       New_Line;
       Put_Line ("The author disclaims copyright to this source code.  In place of");
       Put_Line ("a legal notice, here is a blessing:");

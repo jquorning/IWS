@@ -1,4 +1,4 @@
 .gitignore
 .object/
 binary/
-source-var/setup.adb
+source/setup.adb

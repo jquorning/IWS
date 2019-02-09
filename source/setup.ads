@@ -9,10 +9,9 @@
 
 package Setup is
 
-   Program_Name         : constant String := "GAWS";
-
+   function Get_Program_Name return String;
    function Get_Program_Version return String;
-   function Get_Build_ISO8601 return String;
+   function Get_Build_ISO8601_UTC return String;
    function Get_Uname_M return String;
    function Get_Uname_N return String;
    function Get_Uname_P return String;
