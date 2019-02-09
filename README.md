@@ -1,5 +1,8 @@
 # GAWS - General Ada Web Server
 
+## Status
+Initial
+
 ## Dependencies
 
 * Aws - Ada Web Server
