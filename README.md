@@ -10,8 +10,8 @@ Initial
 
 ## Configuring
 ```sh
-edit var/PROGRAM_NAME
-edit var/PROGRAM_VERSION
+ed var/PROGRAM_NAME
+ed var/PROGRAM_VERSION
 make setup
 ```
 
