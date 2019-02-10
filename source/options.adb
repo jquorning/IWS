@@ -11,6 +11,8 @@ with Ada.Text_IO;
 with Ada.Strings.Fixed;
 with Ada.Directories;
 
+with Auxiliary;
+
 package body Options is
 
 
@@ -32,6 +34,7 @@ package body Options is
                    Host_Name  :    out String)
    is
       use Ada.Text_IO;
+      use Auxiliary;
       File       : File_Type;
       Host_Index : Natural := 0;
       Length     : Natural;
@@ -39,14 +42,23 @@ package body Options is
       Open (File, In_File, Host_List_File.all);
       loop
          declare
-            Line : constant String := Get_Line (File);
+            Line_Raw : constant String := Get_Line (File);
+            Line     : constant String := Trim_Comments (Line_Raw);
          begin
-            Host_Index := Host_Index + 1;
-            if Host_Index = Index then
-               Length := Natural'Min (Line'Length, Host_Name'Length);
-               Host_Name := (others => ' ');
-               Host_Name (Host_Name'First .. Host_Name'First + Length - 1) :=
-                 Line (Line'First .. Line'First + Length - 1);
+            if
+              Line = "" --  or
+--              (Line'Length >= 1 and then Line (Line'First) = '#') or
+--              (Line'Length >= 2 and then Line (Line'First .. Line'First + 1) = "--")
+            then
+               null;  --  Ignore empty lines and comments
+            else
+               Host_Index := Host_Index + 1;
+               if Host_Index = Index then
+                  Length := Natural'Min (Line'Length, Host_Name'Length);
+                  Host_Name := (others => ' ');
+                  Host_Name (Host_Name'First .. Host_Name'First + Length - 1) :=
+                    Line (Line'First .. Line'First + Length - 1);
+               end if;
             end if;
          exception
             when End_Error =>

@@ -1,4 +1,17 @@
-www.jesper-q.dk
+
+# This is a comment
+ # This too
+
+www.jesper-q.dk  # end of line comment
 www.hornsletkrike.dk
+
+-- Empty lines are ignored
+-- This is a comment three
+   -- Even with indention
+
 www.pinsekirken-randers.dk
-www.ckirken.dk
+www.ckirken.dk  -- Also end of line comment
+www.wedonu.dk
+
+
+
