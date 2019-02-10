@@ -9,12 +9,14 @@
 
 with Ada.Text_IO;
 with Ada.Command_Line;
+with Ada.Directories;
 
 with Command_Line;
 with Setup;
 with Options;
 with Exceptions;
 with Program;
+with Host_Lists;
 
 procedure GAWS_Program is
 
@@ -59,28 +61,29 @@ begin
    end if;
 
    declare
-      use Options;
+      use Host_Lists;
       use Ada.Text_IO;
-      Exists : constant Boolean := Host_List_File_Exists;
+      Exists : constant Boolean := Ada.Directories.Exists (Options.Host_List_File.all);
    begin
       Put ("Hosts file exists: ");
       Put (Boolean'Image (Exists));
       New_Line;
-      declare
-         Count : constant Natural := Host_List_Hosts_Count;
-      begin
-         Put ("Hosts count: ");
-         Put (Natural'Image (Count));
-         New_Line;
-         for Index in 1 .. Count loop
-            Put (Positive'Image (Index));
-            Put (": ");
-            Put (Get_Host (Index));
+      if Exists then
+         declare
+            Count : constant Natural := Hosts_Count;
+         begin
+            Put ("Hosts count: ");
+            Put (Natural'Image (Count));
             New_Line;
-         end loop;
-      end;
+            for Index in 1 .. Count loop
+               Put (Positive'Image (Index));
+               Put (": ");
+               Put (Get_Host (Index));
+               New_Line;
+            end loop;
+         end;
+      end if;
    end;
-
    Program.Run;
 
 exception

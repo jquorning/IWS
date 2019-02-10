@@ -9,24 +9,16 @@
 
 with Ada.Text_IO;
 with Ada.Strings.Fixed;
-with Ada.Directories;
 
 with Auxiliary;
+with Options;
 
-package body Options is
+package body Host_Lists is
 
 
    procedure Read (Host_Count :    out Natural;
                    Index      : in     Positive := Positive'Last;
                    Host_Name  :    out String);
-
-
-   function Host_List_File_Exists return Boolean
-   is
-      use Ada.Directories;
-   begin
-      return Exists (Host_List_File.all);
-   end Host_List_File_Exists;
 
 
    procedure Read (Host_Count :    out Natural;
@@ -39,7 +31,7 @@ package body Options is
       Host_Index : Natural := 0;
       Length     : Natural;
    begin
-      Open (File, In_File, Host_List_File.all);
+      Open (File, In_File, Options.Host_List_File.all);
       loop
          declare
             Line_Raw : constant String := Get_Line (File);
@@ -70,20 +62,14 @@ package body Options is
    end Read;
 
 
-   function Host_List_Hosts_Count return Natural
+   function Hosts_Count return Natural
    is
       Host_Count : Natural;
       Host_Name  : String (1 .. 1000);
    begin
-
-      if not Host_List_File_Exists then
-         raise Constraint_Error
-           with "Hosts lists file does not exist.";
-      end if;
-
       Read (Host_Count, Host_Name => Host_Name);
       return Host_Count;
-   end Host_List_Hosts_Count;
+   end Hosts_Count;
 
 
    function Get_Host (Index : in Positive) return String
@@ -96,4 +82,5 @@ package body Options is
       return Fixed.Trim (Host_Name, Both);
    end Get_Host;
 
-end Options;
+
+end Host_Lists;
