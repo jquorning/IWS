@@ -45,13 +45,7 @@ package body Options is
             Line_Raw : constant String := Get_Line (File);
             Line     : constant String := Trim_Comments (Line_Raw);
          begin
-            if
-              Line = "" --  or
---              (Line'Length >= 1 and then Line (Line'First) = '#') or
---              (Line'Length >= 2 and then Line (Line'First .. Line'First + 1) = "--")
-            then
-               null;  --  Ignore empty lines and comments
-            else
+            if Line /= "" then
                Host_Index := Host_Index + 1;
                if Host_Index = Index then
                   Length := Natural'Min (Line'Length, Host_Name'Length);
