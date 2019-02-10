@@ -58,6 +58,29 @@ begin
       return;
    end if;
 
+   declare
+      use Options;
+      use Ada.Text_IO;
+      Exists : constant Boolean := Host_List_File_Exists;
+   begin
+      Put ("Hosts file exists: ");
+      Put (Boolean'Image (Exists));
+      New_Line;
+      declare
+         Count : constant Natural := Host_List_Hosts_Count;
+      begin
+         Put ("Hosts count: ");
+         Put (Natural'Image (Count));
+         New_Line;
+         for Index in 1 .. Count loop
+            Put (Positive'Image (Index));
+            Put (": ");
+            Put (Get_Host (Index));
+            New_Line;
+         end loop;
+      end;
+   end;
+
    Program.Run;
 
 exception
