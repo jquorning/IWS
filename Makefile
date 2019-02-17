@@ -8,7 +8,7 @@
 ##
 
 build:
-	gprbuild -k -p gaws.gpr
+	gprbuild -k gaws.gpr
 
 clean:
 	gprclean -q gaws.gpr

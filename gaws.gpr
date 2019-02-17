@@ -6,7 +6,7 @@
 --    May you find forgiveness for yourself and forgive others.
 --    May you share freely, not taking more than you give.
 --
--- GAWS GPR project file
+--  GAWS GPR project file
 --
 
 with "AWS";
@@ -18,6 +18,8 @@ project GAWS is
   for Object_Dir   use ".object/";
   for Exec_Dir     use "binary/";
   for Main         use ("gaws_program.adb");
+
+  for Create_Missing_Dirs use "true";
 
   package Builder is
 
