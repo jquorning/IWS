@@ -16,7 +16,7 @@
 ------------------------------------------------------------------------------
 
 with Ada.Text_IO;
---  with Ada.Strings.Unbounded;
+with Ada.Strings.Fixed;
 
 with AWS.MIME;
 with AWS.Templates;
@@ -67,14 +67,41 @@ package body Web_Callbacks is
    -- Main --
    ----------
 
+   function Host_Part (Host : in String) return String;
+   --  Get host part of Host with possibly port like "www.example.com:8088".
+
+   function Host_Part (Host : in String) return String
+   is
+      use Ada.Strings.Fixed;
+      Separator          : constant String := ":";
+      Separator_Position : constant Natural := Index (Host, Separator);
+   begin
+      if Separator_Position = 0 then
+         return Host;
+      else
+         return Host (Host'First .. Separator_Position - 1);
+      end if;
+   end Host_Part;
+
    function Main (Request : in AWS.Status.Data)
                  return AWS.Response.Data
    is
       use AWS;
 
-      URI      : constant String          := Status.URI (Request);
-      Filename : constant String          := URI (URI'First + 1 .. URI'Last);
+      URI      : constant String := Status.URI (Request);
+      Host     : constant String := Host_Part (Status.Host (Request));
+      Filename : constant String := URI (URI'First + 1 .. URI'Last);
    begin
+      declare
+         use Ada.Text_IO;
+      begin
+         Put ("Host: ");
+         Put (Host);
+         Put ("    ");
+         Put ("URI: ");
+         Put (URI);
+         New_Line;
+      end;
 
       if
         URI = "/stylesheets/print.css" or
