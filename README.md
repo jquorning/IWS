@@ -6,6 +6,7 @@ Initial
 ## Dependencies
 
 * Aws - Ada Web Server
+* DK8543.Text.Comments
 * Simple_Components - For SQLite3 and SQLite3 binding
 
 ## Configuring
@@ -24,3 +25,7 @@ or
 gprbuild
 ```
 
+## Running
+```sh
+run-gaws
+```
