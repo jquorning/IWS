@@ -50,10 +50,17 @@ package body Web_Callbacks is
    --  Example: "example.com:8088" returns "example.com".
 
    subtype File_Name_String is String;
+   subtype File_Extension_String is String;
    function Extension_Part
-     (File_Name : in File_Name_String) return File_Name_String;
+     (File_Name : in File_Name_String) return File_Extension_String;
    --  Get extension part of File_Name with possible file extension.
    --  Example: "main.css" returns "css".
+
+   subtype T_MIME is String;
+   function To_MIME (Extension : in File_Extension_String) return T_MIME;
+   --  Get MIME type from file extension.
+   --  Example: "css" returns "text/css".
+   --  Example: ""    returns "text/html".
 
 
    function Host_Part (Host : in Host_String) return Host_String
@@ -86,6 +93,19 @@ package body Web_Callbacks is
    end Extension_Part;
 
 
+   function To_MIME (Extension : in File_Extension_String) return T_MIME is
+      use AWS.MIME;
+      LC : constant String := Extension;
+   begin
+      if    LC = ""     then  return Text_HTML;
+      elsif LC = "html" then  return Text_HTML;
+      elsif LC = "css"  then  return Text_CSS;
+      else
+         raise Constraint_Error;
+      end if;
+   end To_MIME;
+
+
    function Main (Request : in AWS.Status.Data)
                  return AWS.Response.Data
    is
@@ -95,6 +115,7 @@ package body Web_Callbacks is
       Host      : constant String := Host_Part (Status.Host (Request));
       File_Name : constant String := URI (URI'First + 1 .. URI'Last);
       Extension : constant String := Extension_Part (File_Name);
+      MIME      : constant String := To_MIME (Extension);
    begin
       declare
          use Ada.Text_IO;
@@ -105,8 +126,8 @@ package body Web_Callbacks is
          Put ("URI: ");
          Put (URI);
          Put ("    ");
-         Put ("Extension: ");
-         Put (Extension);
+         Put ("MIME: ");
+         Put (MIME);
          New_Line;
       end;
 
@@ -116,24 +137,24 @@ package body Web_Callbacks is
         URI = "/stylesheets/boilerplate.css"
       then
          return AWS.Response.Build
-           (MIME.Text_CSS,
+           (AWS.MIME.Text_CSS,
             Message_Body => Templates.Parse (Web_Base & File_Name));
 
       elsif URI = "/favicon.ico" then
          return AWS.Response.Build
-           (MIME.Text_HTML, Message_Body
+           (AWS.MIME.Text_HTML, Message_Body
               => Templates.Parse (Web_Base & "favicon.ico"));
 
       elsif URI = "/" then
          Serve_Main_Page (Request);
          return AWS.Response.Build
-           (MIME.Text_HTML,
+           (AWS.MIME.Text_HTML,
             Message_Body => AWS.Templates.Parse (Web_Base & "main.thtml",
                                                  Translations));
 
       elsif URI = "/test" then
          return AWS.Response.Build
-           (MIME.Text_HTML,
+           (AWS.MIME.Text_HTML,
             Message_Body => "<html><head><title>Test</title></head>" &
               "<body><h1>Test</html>");
 
@@ -141,7 +162,7 @@ package body Web_Callbacks is
          Ada.Text_IO.Put_Line ("URI is " & URI);
          Ada.Text_IO.Put_Line ("Filename is " & File_Name);
          return AWS.Response.Build
-           (MIME.Text_HTML,
+           (AWS.MIME.Text_HTML,
             Message_Body => Templates.Parse (Web_Base & "fejl.html"));
       end if;
 
