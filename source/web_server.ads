@@ -10,6 +10,7 @@
 package Web_Server is
 
    procedure Startup;
+   procedure Work_Until_Stopped;
    procedure Shutdown;
 
 end Web_Server;

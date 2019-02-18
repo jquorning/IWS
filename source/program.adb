@@ -13,10 +13,11 @@ package body Program is
 
    procedure Run
    is
+      use Web_Server;
    begin
-      Web_Server.Startup;
-      delay 20.000;
-      Web_Server.Shutdown;
+      Startup;
+      Work_Until_Stopped;
+      Shutdown;
    end Run;
 
 end Program;

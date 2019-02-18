@@ -13,6 +13,7 @@ with AWS.Config;
 with AWS.Server.Log;
 with AWS.Services.Page_Server;
 
+with Setup;
 with Web_Callbacks;
 with Options;
 
@@ -37,21 +38,25 @@ package body Web_Server is
          AWS.Server.Log.Start_Error (Server);
       end if;
 
---      AWS.Services.Web_Block.Registry.Register
---        ("/", "../web/main.thtml", null);
-
---           Templates.Insert
---             (Translations,
---              Templates.Assoc ("TIL_DATO",
---                               My_Dates.To_ISO8601_Date (Til_Dato)));
       Web_Callbacks.Initialize;
 
       AWS.Server.Start
         (Server,
-         Name     => "web_block",
+         Name     => Setup.Get_Program_Name,
          Callback => Web_Callbacks.Main'Access,
          Port     => Integer'Value (Options.TCP_IP_Port.all));
    end Startup;
+
+
+   procedure Work_Until_Stopped is
+      use Ada.Text_IO;
+      use AWS.Server;
+   begin
+      Put (Setup.Get_Program_Name);
+      Put (": Stop server by pressing Control-C.");
+      New_Line;
+      Wait (Forever);
+   end Work_Until_Stopped;
 
 
    procedure Shutdown is
