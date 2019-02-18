@@ -1,3 +1,4 @@
+* Streamline requests (remove if, elsif, elsif..)
 * Split web on host
 * Accept beta.example.com
 * Compare /etc/hosts with gaws.list
