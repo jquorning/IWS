@@ -35,21 +35,8 @@ package body Web_Callbacks is
    Translations : AWS.Templates.Translate_Set;
 
 
-   procedure Associate (Placeholder : String;
-                        Value       : String);
-   --  Update template translation Placeholder with Value.
-
    procedure Serve_Main_Page (Request : in AWS.Status.Data);
    --  Build main web page "/"
-
-
-   procedure Associate (Placeholder : String;
-                        Value       : String)
-   is
-   begin
-      AWS.Templates.Insert (Translations,
-                            AWS.Templates.Assoc (Placeholder, Value));
-   end Associate;
 
 
    procedure Initialize is
@@ -64,6 +51,7 @@ package body Web_Callbacks is
       List : constant AWS.Parameters.List := AWS.Status.Parameters (Request);
       CMD  : constant String := AWS.Parameters.Get (List, "cmd");
    begin
+      pragma Unreferenced (CMD);
 --      Parser.Parse_Input (CMD);
 
 --        Associate ("CUR_JOB_NAME", Job_Name (Database.Jobs.Get_Current_Job));
