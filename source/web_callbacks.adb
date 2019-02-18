@@ -1,19 +1,11 @@
-------------------------------------------------------------------------------
---                                                                          --
---                     Copyright (C) 2018, Jesper Quorning                  --
---                                                                          --
---  This is free software;  you can redistribute it  and/or modify it       --
---  under terms of the  GNU General Public License as published  by the     --
---  Free Software  Foundation;  either version 3,  or (at your option) any  --
---  later version.  This software is distributed in the hope  that it will  --
---  be useful, but WITHOUT ANY WARRANTY;  without even the implied warranty --
---  of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU     --
---  General Public License for  more details.                               --
---                                                                          --
---  You should have  received  a copy of the GNU General  Public  License   --
---  distributed  with  this  software;   see  file COPYING3.  If not, go    --
---  to http://www.gnu.org/licenses for a complete copy of the license.      --
-------------------------------------------------------------------------------
+--
+--  The author disclaims copyright to this source code.  In place of
+--  a legal notice, here is a blessing:
+--
+--    May you do good and not evil.
+--    May you find forgiveness for yourself and forgive others.
+--    May you share freely, not taking more than you give.
+--
 
 with Ada.Text_IO;
 with Ada.Strings.Fixed;
@@ -23,11 +15,6 @@ with AWS.Templates;
 with AWS.Parameters;
 
 with GNAT.Traceback.Symbolic;
-
---  with Parser;
---  with Database.Jobs;
---  with Web_IO;
---  with Types;
 
 package body Web_Callbacks is
 
@@ -41,8 +28,6 @@ package body Web_Callbacks is
 
    procedure Initialize is
    begin
-      --  Static translations
---      Associate ("COMMAND_TABLE", Web_IO.Help_Image);
       null;
    end Initialize;
 
@@ -50,16 +35,8 @@ package body Web_Callbacks is
    procedure Serve_Main_Page (Request : in AWS.Status.Data) is
       List : constant AWS.Parameters.List := AWS.Status.Parameters (Request);
       CMD  : constant String := AWS.Parameters.Get (List, "cmd");
-   begin
       pragma Unreferenced (CMD);
---      Parser.Parse_Input (CMD);
-
---        Associate ("CUR_JOB_NAME", Job_Name (Database.Jobs.Get_Current_Job));
---        Associate ("JOBS_LIST",    Web_IO.Jobs_Image);
-
---        Associate ("JOB_INFORMATION",
---                   Web_IO.Job_Image (Database.Jobs.Get_Current_Job));
---        Associate ("LAST_COMMAND",    Parser.Get_Last_Command);
+   begin
       null;
    end Serve_Main_Page;
 
