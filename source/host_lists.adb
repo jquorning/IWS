@@ -10,7 +10,8 @@
 with Ada.Text_IO;
 with Ada.Strings.Fixed;
 
-with Auxiliary;
+with DK8543.Text.Comments;
+
 with Options;
 
 package body Host_Lists is
@@ -26,7 +27,7 @@ package body Host_Lists is
                    Host_Name  :    out String)
    is
       use Ada.Text_IO;
-      use Auxiliary;
+      use DK8543.Text.Comments;
       File       : File_Type;
       Host_Index : Natural := 0;
       Length     : Natural;

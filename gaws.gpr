@@ -10,6 +10,7 @@
 --
 
 with "AWS";
+with "../DK8543/dk8543.gpr";
 
 project GAWS is
 
