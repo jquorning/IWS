@@ -7,6 +7,8 @@
 ##    May you share freely, not taking more than you give.
 ##
 
+all: setup build
+
 build:
 	gprbuild -k gaws.gpr
 

@@ -8,13 +8,15 @@
 --
 
 with Ada.Text_IO;
-with Ada.Strings.Fixed;
 
 with AWS.MIME;
 with AWS.Templates;
 with AWS.Parameters;
 
 with GNAT.Traceback.Symbolic;
+
+with DK8543.AWS.Status;
+with DK8543.AWS.MIME;
 
 package body Web_Callbacks is
 
@@ -44,73 +46,15 @@ package body Web_Callbacks is
    -- Main --
    ----------
 
-   subtype Host_String is String;
-   function Host_Part (Host : in Host_String) return Host_String;
-   --  Get host part of Host with possibly port.
-   --  Example: "example.com:8088" returns "example.com".
 
-   subtype File_Name_String is String;
-   subtype File_Extension_String is String;
-   function Extension_Part
-     (File_Name : in File_Name_String) return File_Extension_String;
-   --  Get extension part of File_Name with possible file extension.
-   --  Example: "main.css" returns "css".
-
-   subtype T_MIME is String;
-   function To_MIME (Extension : in File_Extension_String) return T_MIME;
-   --  Get MIME type from file extension.
-   --  Example: "css" returns "text/css".
-   --  Example: ""    returns "text/html".
-
-
-   function Host_Part (Host : in Host_String) return Host_String
-   is
-      use Ada.Strings.Fixed;
-      Separator          : constant String := ":";
-      Separator_Position : constant Natural := Index (Host, Separator);
-   begin
-      if Separator_Position = 0 then
-         return Host;
-      else
-         return Host (Host'First .. Separator_Position - 1);
-      end if;
-   end Host_Part;
-
-
-   function Extension_Part
-     (File_Name : in File_Name_String) return File_Name_String
-   is
-      use Ada.Strings;
-      Separator          : constant String  := ".";
-      Separator_Position : constant Natural := Fixed.Index (File_Name, Separator,
-                                                            Going => Backward);
-   begin
-      if Separator_Position = 0 then
-         return "";
-      else
-         return File_Name (Separator_Position + Separator'Length .. File_Name'Last);
-      end if;
-   end Extension_Part;
-
-
-   function To_MIME (Extension : in File_Extension_String) return T_MIME is
-      use AWS.MIME;
-      LC : constant String := Extension;
-   begin
-      if    LC = ""     then  return Text_HTML;
-      elsif LC = "html" then  return Text_HTML;
-      elsif LC = "css"  then  return Text_CSS;
-      else
-         raise Constraint_Error;
-      end if;
-   end To_MIME;
 
 
    function Main (Request : in AWS.Status.Data)
                  return AWS.Response.Data
    is
       use AWS;
-
+      use DK8543.AWS.Status;
+      use DK8543.AWS.MIME;
       URI       : constant String := Status.URI (Request);
       Host      : constant String := Host_Part (Status.Host (Request));
       File_Name : constant String := URI (URI'First + 1 .. URI'Last);
