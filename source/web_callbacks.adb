@@ -123,11 +123,11 @@ package body Web_Callbacks is
          Put ("Host: ");
          Put (Host);
          Put ("    ");
-         Put ("URI: ");
-         Put (URI);
-         Put ("    ");
          Put ("MIME: ");
          Put (MIME);
+         Put ("    ");
+         Put ("URI: ");
+         Put (URI);
          New_Line;
       end;
 
