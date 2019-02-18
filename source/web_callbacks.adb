@@ -44,10 +44,19 @@ package body Web_Callbacks is
    -- Main --
    ----------
 
-   function Host_Part (Host : in String) return String;
-   --  Get host part of Host with possibly port like "www.example.com:8088".
+   subtype Host_String is String;
+   function Host_Part (Host : in Host_String) return Host_String;
+   --  Get host part of Host with possibly port.
+   --  Example: "example.com:8088" returns "example.com".
 
-   function Host_Part (Host : in String) return String
+   subtype File_Name_String is String;
+   function Extension_Part
+     (File_Name : in File_Name_String) return File_Name_String;
+   --  Get extension part of File_Name with possible file extension.
+   --  Example: "main.css" returns "css".
+
+
+   function Host_Part (Host : in Host_String) return Host_String
    is
       use Ada.Strings.Fixed;
       Separator          : constant String := ":";
@@ -60,14 +69,32 @@ package body Web_Callbacks is
       end if;
    end Host_Part;
 
+
+   function Extension_Part
+     (File_Name : in File_Name_String) return File_Name_String
+   is
+      use Ada.Strings;
+      Separator          : constant String  := ".";
+      Separator_Position : constant Natural := Fixed.Index (File_Name, Separator,
+                                                            Going => Backward);
+   begin
+      if Separator_Position = 0 then
+         return "";
+      else
+         return File_Name (Separator_Position + Separator'Length .. File_Name'Last);
+      end if;
+   end Extension_Part;
+
+
    function Main (Request : in AWS.Status.Data)
                  return AWS.Response.Data
    is
       use AWS;
 
-      URI      : constant String := Status.URI (Request);
-      Host     : constant String := Host_Part (Status.Host (Request));
-      Filename : constant String := URI (URI'First + 1 .. URI'Last);
+      URI       : constant String := Status.URI (Request);
+      Host      : constant String := Host_Part (Status.Host (Request));
+      File_Name : constant String := URI (URI'First + 1 .. URI'Last);
+      Extension : constant String := Extension_Part (File_Name);
    begin
       declare
          use Ada.Text_IO;
@@ -77,21 +104,22 @@ package body Web_Callbacks is
          Put ("    ");
          Put ("URI: ");
          Put (URI);
+         Put ("    ");
+         Put ("Extension: ");
+         Put (Extension);
          New_Line;
       end;
 
       if
         URI = "/stylesheets/print.css" or
         URI = "/stylesheets/main.css" or
-        URI = "/stylesheets/boilerplate.css" or
-        URI = "/css/rg.css"
+        URI = "/stylesheets/boilerplate.css"
       then
          return AWS.Response.Build
            (MIME.Text_CSS,
-            Message_Body => Templates.Parse (Web_Base & Filename));
+            Message_Body => Templates.Parse (Web_Base & File_Name));
 
       elsif URI = "/favicon.ico" then
-         Ada.Text_IO.Put_Line ("Serving ikon " & URI);
          return AWS.Response.Build
            (MIME.Text_HTML, Message_Body
               => Templates.Parse (Web_Base & "favicon.ico"));
@@ -111,7 +139,7 @@ package body Web_Callbacks is
 
       else
          Ada.Text_IO.Put_Line ("URI is " & URI);
-         Ada.Text_IO.Put_Line ("Filename is " & Filename);
+         Ada.Text_IO.Put_Line ("Filename is " & File_Name);
          return AWS.Response.Build
            (MIME.Text_HTML,
             Message_Body => Templates.Parse (Web_Base & "fejl.html"));
