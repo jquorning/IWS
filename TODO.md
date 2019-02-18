@@ -1,3 +1,4 @@
 * Split web on host
-* accept beta.example.com
+* Accept beta.example.com
+* Split out test setup
 * Fix Invalid_Switch
