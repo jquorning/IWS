@@ -3,7 +3,7 @@
  # This too
 
 www.jesper-q.dk  # end of line comment
-www.hornsletkrike.dk
+www.hornsletkirke.dk
 
 -- Empty lines are ignored
 -- This is a comment three
@@ -12,6 +12,7 @@ www.hornsletkrike.dk
 www.pinsekirken-randers.dk
 www.ckirken.dk  -- Also end of line comment
 www.wedonu.dk
-
+autotrof.dk
+example.com
 
 
