@@ -8,80 +8,72 @@
 --
 
 with Ada.Text_IO;
-with Ada.Strings.Fixed;
+with Ada.Directories;
+with Ada.Exceptions;
 
 with DK8543.Text.Comments;
+with DK8543.Errors;
 
-with Options;
+with Web_Databases;
+with Web_Server;
 
 package body Host_Lists is
 
 
-   procedure Read (Host_Count :    out Natural;
-                   Index      : in     Positive := Positive'Last;
-                   Host_Name  :    out String);
+   function Get_Host
+     (From_File : in out Ada.Text_IO.File_Type) return String;
 
 
-   procedure Read (Host_Count :    out Natural;
-                   Index      : in     Positive := Positive'Last;
-                   Host_Name  :    out String)
+   function Get_Host (From_File : in out Ada.Text_IO.File_Type)
+                     return String
+   is
+      use DK8543.Text.Comments;
+      Line_Raw  : constant String := Ada.Text_IO.Get_Line (From_File);
+   begin
+      return Trim_Comments (Line_Raw);
+   end Get_Host;
+
+
+
+   procedure Register_Hosts (Hosts_File : in String)
    is
       use Ada.Text_IO;
-      use DK8543.Text.Comments;
+      Exists     : constant Boolean := Ada.Directories.Exists (Hosts_File);
       File       : File_Type;
-      Host_Index : Natural := 0;
-      Length     : Natural;
+      Line_Number : Natural := 0;
    begin
-      Open (File, In_File, Options.Host_List_File.all);
+      if not Exists then
+         raise Constraint_Error
+           with "Hosts file " & Hosts_File & " does not exist.";
+      end if;
+
+      Open (File, In_File, Hosts_File);
       loop
          declare
-            Line_Raw : constant String := Get_Line (File);
-            Line     : constant String := Trim_Comments (Line_Raw);
+            Host_Name : constant String := Get_Host (File);
          begin
-            if Line /= "" then
-               Host_Index := Host_Index + 1;
-               if Host_Index = Index then
-                  Length := Natural'Min (Line'Length, Host_Name'Length);
-                  Host_Name := (others => ' ');
-                  Host_Name (Host_Name'First .. Host_Name'First + Length - 1) :=
-                    Line (Line'First .. Line'First + Length - 1);
-               end if;
+            Line_Number := Line_Number + 1;
+            if Host_Name /= "" then
+               Web_Server.Example := Web_Databases.Create_Respository (Host_Name);
+               DK8543.Errors.Error
+                 (Hosts_File, Line_Number, "Respository for '" & Host_Name & "' created.");
             end if;
-         exception
-            when End_Error =>
-               exit;
-         end;
 
+         exception
+
+            when Occ : Constraint_Error =>
+               DK8543.Errors.Error
+                 (Hosts_File, Line_Number,
+                  Ada.Exceptions.Exception_Message (Occ));
+         end;
       end loop;
 
    exception
 
       when End_Error =>
          Close (File);
-         Host_Count := Host_Index;
 
-   end Read;
-
-
-   function Hosts_Count return Natural
-   is
-      Host_Count : Natural;
-      Host_Name  : String (1 .. 1000);
-   begin
-      Read (Host_Count, Host_Name => Host_Name);
-      return Host_Count;
-   end Hosts_Count;
-
-
-   function Get_Host (Index : in Positive) return String
-   is
-      use Ada.Strings;
-      Host_Count : Natural;
-      Host_Name  : String (1 .. 1000) := (others => ' ');
-   begin
-      Read (Host_Count, Index, Host_Name);
-      return Fixed.Trim (Host_Name, Both);
-   end Get_Host;
+   end Register_Hosts;
 
 
 end Host_Lists;

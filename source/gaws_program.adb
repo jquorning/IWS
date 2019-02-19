@@ -17,6 +17,8 @@ with Options;
 with Exceptions;
 with Program;
 with Host_Lists;
+with Web_Server;
+with Web_Databases;
 
 procedure GAWS_Program is
 
@@ -60,30 +62,10 @@ begin
       return;
    end if;
 
-   declare
-      use Host_Lists;
-      use Ada.Text_IO;
-      Exists : constant Boolean := Ada.Directories.Exists (Options.Host_List_File.all);
-   begin
-      Put ("Hosts file exists: ");
-      Put (Boolean'Image (Exists));
-      New_Line;
-      if Exists then
-         declare
-            Count : constant Natural := Hosts_Count;
-         begin
-            Put ("Hosts count: ");
-            Put (Natural'Image (Count));
-            New_Line;
-            for Index in 1 .. Count loop
-               Put (Positive'Image (Index));
-               Put (": ");
-               Put (Get_Host (Index));
-               New_Line;
-            end loop;
-         end;
-      end if;
-   end;
+   Host_Lists.Register_Hosts (Hosts_File => Options.Host_List_File.all);
+
+   Web_Server.Example := Web_Databases.Create_Respository ("example.com");
+
    Program.Run;
 
 exception

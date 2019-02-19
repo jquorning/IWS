@@ -18,6 +18,9 @@ with GNAT.Traceback.Symbolic;
 with DK8543.AWS.Status;
 with DK8543.AWS.MIME;
 
+with Web_Server;
+with Web_Databases;
+
 package body Web_Callbacks is
 
    Web_Base : constant String := "../web/";
@@ -91,6 +94,7 @@ package body Web_Callbacks is
 
       elsif URI = "/" then
          Serve_Main_Page (Request);
+         Web_Databases.Put (Web_Server.Example, Host, URI);
          return AWS.Response.Build
            (AWS.MIME.Text_HTML,
             Message_Body => AWS.Templates.Parse (Web_Base & "main.thtml",

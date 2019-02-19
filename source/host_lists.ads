@@ -9,10 +9,12 @@
 
 package Host_Lists is
 
-   function Hosts_Count return Natural;
+--   function Hosts_Count return Natural;
    --  Return hosts count. Call Host_List_File_Exists before this
    --  function to avoid Constraint_Error.
 
-   function Get_Host (Index : in Positive) return String;
+--   function Get_Host (Index : in Positive) return String;
+
+   procedure Register_Hosts (Hosts_File : in String);
 
 end Host_Lists;
