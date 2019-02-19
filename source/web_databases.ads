@@ -13,10 +13,10 @@ package Web_Databases is
 
    subtype T_Host_Name is String;
 
-   function Dir_Exists (Host : in T_Host_Name) return Boolean;
+--   function Dir_Exists (Host : in T_Host_Name) return Boolean;
    --
 
-   procedure Register (Host : in T_Host_Name);
+--   procedure Register (Host : in T_Host_Name);
    --  May rise Constraint_Error when Host does not exist.
 
    type T_Respository is private;

@@ -19,24 +19,24 @@ package body Web_Databases is
       end record;
 
 
-   function Dir_Exists (Host : in T_Host_Name) return Boolean
-   is
-      use Ada.Directories;
-   begin
-      return Exists (Host);
-   end Dir_Exists;
+--     function Dir_Exists (Host : in T_Host_Name) return Boolean
+--     is
+--        use Ada.Directories;
+--     begin
+--        return Exists (Host);
+--     end Dir_Exists;
 
 
-   procedure Register (Host : in T_Host_Name)
-   is
-      use Ada.Text_IO;
-   begin
-      if not Dir_Exists (Host) then
-         raise Constraint_Error
-           with "Web directory '" & Host & "'does not exist.";
-      end if;
-      Put_Line ("Register: Stub.");
-   end Register;
+--     procedure Register (Host : in T_Host_Name)
+--     is
+--        use Ada.Text_IO;
+--     begin
+--        if not Dir_Exists (Host) then
+--           raise Constraint_Error
+--             with "Web directory '" & Host & "'does not exist.";
+--        end if;
+--        Put_Line ("Register: Stub.");
+--     end Register;
 
 
    function Create_Respository

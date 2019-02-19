@@ -2,14 +2,14 @@
 # This is a comment
  # This too
 
-www.jesper-q.dk  # end of line comment
+www.jesperq.net  # end of line comment
 www.hornsletkirke.dk
 
 -- Empty lines are ignored
 -- This is a comment three
    -- Even with indention
 
-www.pinsekirken-randers.dk
+#www.pinsekirken-randers.dk
 www.ckirken.dk  -- Also end of line comment
 www.wedonu.dk
 autotrof.dk

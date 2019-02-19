@@ -23,7 +23,7 @@ with Web_Databases;
 
 package body Web_Callbacks is
 
-   Web_Base : constant String := "../web/";
+   Web_Base : constant String := "../respository/";
    Translations : AWS.Templates.Translate_Set;
 
 
@@ -90,14 +90,14 @@ package body Web_Callbacks is
       elsif URI = "/favicon.ico" then
          return AWS.Response.Build
            (AWS.MIME.Text_HTML, Message_Body
-              => Templates.Parse (Web_Base & "favicon.ico"));
+              => Templates.Parse (Web_Base & "image/favicon.ico"));
 
       elsif URI = "/" then
          Serve_Main_Page (Request);
          Web_Databases.Put (Web_Server.Example, Host, URI);
          return AWS.Response.Build
            (AWS.MIME.Text_HTML,
-            Message_Body => AWS.Templates.Parse (Web_Base & "main.thtml",
+            Message_Body => AWS.Templates.Parse (Web_Base & "static/main.html",
                                                  Translations));
 
       elsif URI = "/test" then

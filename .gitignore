@@ -2,5 +2,5 @@
 .object/
 binary/gaws
 source/setup.adb
-web/gaws.log
-web/gaws_error.log
+respository/gaws.log
+respository/gaws_error.log
