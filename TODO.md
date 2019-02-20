@@ -1,4 +1,3 @@
-* Rename Web_Databases to Web_Respository
 * Make tagged type for T_Respository
 * Make all respositories working together
 * Get css working for example.com:8088

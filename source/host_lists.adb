@@ -15,7 +15,7 @@ with DK8543.Text.Comments;
 with DK8543.Errors;
 
 with Setup;
-with Web_Databases;
+with Respositories;
 with Web_Server;
 
 package body Host_Lists is
@@ -55,7 +55,7 @@ package body Host_Lists is
          begin
             Line_Number := Line_Number + 1;
             if Host_Name /= "" then
-               Web_Server.Example := Web_Databases.Create_Respository (Host_Name);
+               Web_Server.Example := Respositories.Create_Respository (Host_Name);
                Ada.Text_IO.Put (Setup.Get_Program_Name);
                Ada.Text_IO.Put (": Respository for '" & Host_Name & "' created.");
                Ada.Text_IO.New_Line;

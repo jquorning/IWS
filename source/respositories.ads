@@ -10,7 +10,7 @@
 with AWS.Status;
 with AWS.Response;
 
-package Web_Databases is
+package Respositories is
 
    subtype T_Host_Name is String;
 
@@ -30,4 +30,4 @@ private
    type R_Respository;
    type T_Respository is access all R_Respository;
 
-end Web_Databases;
+end Respositories;

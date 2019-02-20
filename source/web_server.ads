@@ -7,7 +7,7 @@
 --    May you share freely, not taking more than you give.
 --
 
-with Web_Databases;
+with Respositories;
 
 package Web_Server is
 
@@ -15,7 +15,7 @@ package Web_Server is
    procedure Work_Until_Stopped;
    procedure Shutdown;
 
-   Example : Web_Databases.T_Respository;
+   Example : Respositories.T_Respository;
 
 end Web_Server;
 

@@ -16,7 +16,7 @@ with AWS.Templates;
 with DK8543.AWS.Status;
 with DK8543.AWS.MIME;
 
-package body Web_Databases is
+package body Respositories is
 
 
    type R_Respository is
@@ -106,4 +106,4 @@ package body Web_Databases is
    end Serve_Page;
 
 
-end Web_Databases;
+end Respositories;
