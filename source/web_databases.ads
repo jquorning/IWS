@@ -7,8 +7,6 @@
 --    May you share freely, not taking more than you give.
 --
 
-with Ada.Strings.Unbounded;
-
 with AWS.Status;
 with AWS.Response;
 
@@ -21,22 +19,6 @@ package Web_Databases is
    function Create_Respository
      (Host : in T_Host_Name) return T_Respository;
    --  Create respository for host.
-
-   use Ada.Strings.Unbounded;
-   type T_Request is
-      record
-         Host : Unbounded_String;
-         URL  : Unbounded_String;
-      end record;
-
-   procedure Put (Respository : in T_Respository;
-                  Host        : in String;
-                  URI         : in String);
-   --  Put Request on work qeueue of Respository.
-
-   procedure Service_Request (Respository : in T_Respository;
-                              Request     : in AWS.Status.Data);
-   --  Put Request on work qeueue of Respository.
 
    function Serve_Page (Respository : in T_Respository;
                         Request     : in AWS.Status.Data)
