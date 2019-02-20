@@ -1,6 +1,4 @@
 #!/bin/sh
 
 cd $HOME/Projekt/GAWS/respository
-echo "Try localhost:8088"
-echo "Try www.jesper-q.dk:8088"
 ../binary/gaws --port=8088 --host-list=../var/gaws.hosts $1

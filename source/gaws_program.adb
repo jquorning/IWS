@@ -9,7 +9,6 @@
 
 with Ada.Text_IO;
 with Ada.Command_Line;
---  with Ada.Directories;
 
 with Command_Line;
 with Setup;
@@ -22,10 +21,13 @@ with Web_Databases;
 
 procedure GAWS_Program is
 
-   procedure Show_Help;
+   procedure Put_Version;
    --  Put help text to terminal.
 
-   procedure Show_Help
+   procedure Put_Hints;
+   --  Put hinst text to terminal.
+
+   procedure Put_Version
    is
       use Ada.Text_IO, Setup;
       Version : constant String :=
@@ -43,13 +45,23 @@ procedure GAWS_Program is
       Put_Line ("   May you find forgiveness for yourself and forgive others.");
       Put_Line ("   May you share freely, not taking more than you give.");
       New_Line;
-   end Show_Help;
+   end Put_Version;
 
-   use Ada.Command_Line;
+   procedure Put_Hints
+   is
+      use Ada.Text_IO, Setup;
+   begin
+      New_Line;
+      Put_Line ("GAWS: Try http://example.com:8088");
+      New_Line;
+   end Put_Hints;
+
+      use Ada.Command_Line;
 
    Success : Boolean;
 begin
 
+   Put_Version;
    Command_Line.Parse (Success);
 
    if not Success then
@@ -58,13 +70,15 @@ begin
    end if;
 
    if  Options.Show_Version then
-      Show_Help;
+      Put_Version;
       return;
    end if;
 
    Host_Lists.Register_Hosts (Hosts_File => Options.Host_List_File.all);
 
    Web_Server.Example := Web_Databases.Create_Respository ("example.com");
+
+   Put_Hints;
 
    Program.Run;
 
