@@ -8,7 +8,7 @@
 ##
 
 all:
-	cd ..; make build
+	cd ..; make all
 
 clean:
 	cd ..; make clean

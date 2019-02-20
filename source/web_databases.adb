@@ -100,13 +100,9 @@ package body Web_Databases is
               => Templates.Parse (Web_Base & "image/favicon.ico"));
 
       elsif URI = "/" then
-         --  Serve_Main_Page (Request);
-         --  Web_Databases.Put (Web_Server.Example, Host, URI);
          Data := AWS.Response.Build
            (AWS.MIME.Text_HTML,
             Message_Body => AWS.Templates.Parse (Web_Base & "static/main.html"));
-         --  ,
-         --  Translations));
 
       elsif URI = "/test" then
          Data := AWS.Response.Build
@@ -170,13 +166,9 @@ package body Web_Databases is
               => Templates.Parse (Web_Base & "image/favicon.ico"));
 
       elsif URI = "/" then
-         --  Serve_Main_Page (Request);
-         --  Web_Databases.Put (Web_Server.Example, Host, URI);
          Data := AWS.Response.Build
            (AWS.MIME.Text_HTML,
             Message_Body => AWS.Templates.Parse (Web_Base & "static/main.html"));
-         --  ,
-         --  Translations));
 
       elsif URI = "/test" then
          Data := AWS.Response.Build
