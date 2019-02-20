@@ -1,4 +1,6 @@
-* Get rid of exception address listing
+* Rename Web_Databases to Web_Respository
+* Make tagged type for T_Respository
+* Make all respositories working together
 * Get css working for example.com:8088
 * Streamline requests (remove if, elsif, elsif..)
 * Split web on host
