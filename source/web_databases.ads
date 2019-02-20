@@ -9,6 +9,8 @@
 
 with Ada.Strings.Unbounded;
 
+with AWS.Status;
+
 package Web_Databases is
 
    subtype T_Host_Name is String;
@@ -35,6 +37,10 @@ package Web_Databases is
    procedure Put (Respository : in T_Respository;
                   Host        : in String;
                   URI         : in String);
+   --  Put Request on work qeueue of Respository.
+
+   procedure Service_Request (Respository : in T_Respository;
+                              Request     : in AWS.Status.Data);
    --  Put Request on work qeueue of Respository.
 
 private
