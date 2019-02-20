@@ -10,6 +10,7 @@
 with Ada.Strings.Unbounded;
 
 with AWS.Status;
+with AWS.Response;
 
 package Web_Databases is
 
@@ -42,6 +43,11 @@ package Web_Databases is
    procedure Service_Request (Respository : in T_Respository;
                               Request     : in AWS.Status.Data);
    --  Put Request on work qeueue of Respository.
+
+   function Serve_Page (Respository : in T_Respository;
+                        Request     : in AWS.Status.Data)
+                       return AWS.Response.Data;
+   --  Syncronous old style serve page.
 
 private
 

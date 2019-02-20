@@ -78,7 +78,11 @@ package body Web_Callbacks is
          New_Line;
       end;
 
-      Web_Databases.Service_Request (Web_Server.Example, Request);
+      --  Asyncronous
+      --  Web_Databases.Service_Request (Web_Server.Example, Request);
+
+      --  Syncronous
+      return Web_Databases.Serve_Page (Web_Server.Example, Request);
 
 --        if
 --          URI = "/stylesheets/print.css" or
