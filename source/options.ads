@@ -15,6 +15,7 @@ package Options is
 
    Show_Version  : aliased Boolean;
    Show_Help     : aliased Boolean;
+   Be_Quiet      : aliased Boolean;
 
    Default_Host_List_File : constant String := Setup.Get_Program_Name & ".hosts";
    Default_TCP_IP_Port    : constant String := "8080";

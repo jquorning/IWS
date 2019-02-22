@@ -49,8 +49,12 @@ procedure GAWS_Program is
    is
       use Ada.Text_IO, Setup;
    begin
+      Put (Setup.Get_Program_Name);
+      Put (": Try http://gaws.org:8088");
       New_Line;
-      Put_Line ("GAWS: Try http://example.com:8088");
+
+      Put (Setup.Get_Program_Name);
+      Put (": Stop server with Control-C");
       New_Line;
    end Put_Hints;
 
@@ -59,8 +63,11 @@ procedure GAWS_Program is
    Success : Boolean;
 begin
 
-   Put_Version;
    Command_Line.Parse (Success);
+
+   if not Options.Be_Quiet then
+      Put_Version;
+   end if;
 
    if not Success then
       Set_Exit_Status (Ada.Command_Line.Failure);
@@ -72,9 +79,11 @@ begin
       return;
    end if;
 
-   Host_Lists.Register_Hosts (Hosts_File => Options.Host_List_File.all);
+   if not Options.Be_Quiet then
+      Put_Hints;
+   end if;
 
-   Put_Hints;
+   Host_Lists.Register_Hosts (Hosts_File => Options.Host_List_File.all);
 
    Program.Run;
 

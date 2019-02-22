@@ -18,6 +18,7 @@ package body Command_Line is
    Long_Switch_Web_Dir_Base : constant String := "--web-base=";
    Long_Switch_TCP_IP_Port  : constant String := "--port=";
    Long_Switch_Host_List    : constant String := "--host-list=";
+   Long_Switch_Be_Quiet     : constant String := "--quiet";
 
    Config : GNAT.Command_Line.Command_Line_Configuration;
 
@@ -41,6 +42,9 @@ package body Command_Line is
       Define_Switch (Config, Host_List_File'Access, "-h=", Argument => "FILE",
                      Help        => "List of hosts to serve.",
                      Long_Switch => Long_Switch_Host_List);
+      Define_Switch (Config, Be_Quiet'Access, "-q",
+                     Help        => "Be quiet (No banner, blessing etc).",
+                     Long_Switch => Long_Switch_Be_Quiet);
 
       --  Do the whole parsing business.
       Getopt (Config);

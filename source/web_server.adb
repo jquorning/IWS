@@ -52,9 +52,6 @@ package body Web_Server is
       use Ada.Text_IO;
       use AWS.Server;
    begin
-      Put (Setup.Get_Program_Name);
-      Put (": Stop server by pressing Control-C.");
-      New_Line;
       Wait (Forever);
    end Work_Until_Stopped;
 
