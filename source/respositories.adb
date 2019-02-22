@@ -20,6 +20,10 @@ with DK8543.AWS.MIME;
 
 package body Respositories is
 
+
+   Respository_Base : constant String := "../respository/";
+
+
    use Ada.Containers;
    function Hash (Host : T_Host_Name) return Hash_Type;
 
@@ -105,17 +109,16 @@ package body Respositories is
       use DK8543.AWS.Status;
       use DK8543.AWS.MIME;
       Data      : AWS.Response.Data;
-      Web_Base  : constant String := "../respository/example.com/";
       URI       : constant String := Status.URI (Request);
       Host      : constant String := Host_Part (Status.Host (Request));
       File_Name : constant String := URI (URI'First + 1 .. URI'Last);
       Extension : constant String := Extension_Part (File_Name);
       MIME      : constant String := To_MIME (Extension);
+      Host_Base : constant String := Respository_Base & Host & "/";
    begin
       declare
          use Ada.Text_IO;
       begin
-         Put ("Web_Databases.Service_Request: ");
          Put ("Host: ");
          Put (Host);
          Put ("    ");
@@ -134,17 +137,17 @@ package body Respositories is
       then
          Data := AWS.Response.Build
            (AWS.MIME.Text_CSS,
-            Message_Body => Templates.Parse (Web_Base & File_Name));
+            Message_Body => Templates.Parse (Host_Base & "stylesheets/" & File_Name));
 
       elsif URI = "/favicon.ico" then
          Data := AWS.Response.Build
            (AWS.MIME.Text_HTML, Message_Body
-              => Templates.Parse (Web_Base & "image/favicon.ico"));
+              => Templates.Parse (Host_Base & "image/favicon.ico"));
 
       elsif URI = "/" then
          Data := AWS.Response.Build
            (AWS.MIME.Text_HTML,
-            Message_Body => AWS.Templates.Parse (Web_Base & "static/main.html"));
+            Message_Body => AWS.Templates.Parse (Host_Base & "static/main.html"));
 
       elsif URI = "/test" then
          Data := AWS.Response.Build
@@ -157,7 +160,7 @@ package body Respositories is
          Ada.Text_IO.Put_Line ("Filename is " & File_Name);
          Data := AWS.Response.Build
            (AWS.MIME.Text_HTML,
-            Message_Body => Templates.Parse (Web_Base & "fejl.html"));
+            Message_Body => Templates.Parse (Respository_Base & "common/fejl.html"));
       end if;
 
       return Data;
