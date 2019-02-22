@@ -39,6 +39,7 @@ package body Host_Lists is
    procedure Register_Hosts (Hosts_File : in String)
    is
       use Ada.Text_IO;
+--      use Ada.Strings.Unbounded;
       Exists     : constant Boolean := Ada.Directories.Exists (Hosts_File);
       File       : File_Type;
       Line_Number : Natural := 0;
@@ -56,9 +57,11 @@ package body Host_Lists is
             Line_Number := Line_Number + 1;
             if Host_Name /= "" then
                Web_Server.Example := Respositories.Create_Respository (Host_Name);
-               Ada.Text_IO.Put (Setup.Get_Program_Name);
-               Ada.Text_IO.Put (": Respository for '" & Host_Name & "' created.");
-               Ada.Text_IO.New_Line;
+               Put (Setup.Get_Program_Name);
+               Put (": Respository for '");
+               Put (Host_Name);
+               Put ("' created.");
+               New_Line;
             end if;
 
          exception

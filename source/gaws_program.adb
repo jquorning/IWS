@@ -16,8 +16,6 @@ with Options;
 with Exceptions;
 with Program;
 with Host_Lists;
-with Web_Server;
-with Respositories;
 
 procedure GAWS_Program is
 
@@ -75,8 +73,6 @@ begin
    end if;
 
    Host_Lists.Register_Hosts (Hosts_File => Options.Host_List_File.all);
-
-   Web_Server.Example := Respositories.Create_Respository ("example.com");
 
    Put_Hints;
 
