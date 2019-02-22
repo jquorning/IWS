@@ -14,6 +14,9 @@ with AWS.Response;
 
 package Respositories is
 
+   Unknown_Host : exception;
+   --  Host is not known
+
    subtype S_Host_Name is String;
    subtype T_Host_Name is Ada.Strings.Unbounded.Unbounded_String;
 

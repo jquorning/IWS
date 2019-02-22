@@ -81,10 +81,18 @@ package body Respositories is
    is
       use Ada.Strings.Unbounded;
       use DK8543.AWS.Status;
-      Host_Name   : constant String        := Host_Part (AWS.Status.Host (Request));
-      Respository : constant T_Respository := Map.Element (To_Unbounded_String (Host_Name));
+      use Respository_Maps;
+      Host_Name : constant String      := Host_Part (AWS.Status.Host (Request));
+      Host      : constant T_Host_Name := To_Unbounded_String (Host_Name);
+      Respository : T_Respository;
    begin
-      return Serve_Page (Respository, Request);
+      if Map.Find (Host) = No_Element then
+         raise Unknown_Host
+           with "Host '" & Host_Name & "' is not known to the server.";
+      else
+         Respository := Map.Element (Host);
+         return Serve_Page (Respository, Request);
+      end if;
    end Delegate;
 
 

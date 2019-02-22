@@ -7,10 +7,6 @@
 --    May you share freely, not taking more than you give.
 --
 
-with Ada.Text_IO;
-
-with GNAT.Traceback.Symbolic;
-
 with DK8543.AWS.Status;
 
 with Respositories;
@@ -43,20 +39,6 @@ package body Web_Callbacks is
 
       --  Syncronous delegation
       return Respositories.Delegate (Request);
-
-   exception
-
-      when others =>
-         declare --  Call_Stack
-            Trace  : GNAT.Traceback.Tracebacks_Array (1 .. 100);
-            Length : Natural;
-         begin
-            GNAT.Traceback.Call_Chain (Trace, Length);
-            Ada.Text_IO.Put_Line
-              (GNAT.Traceback.Symbolic.Symbolic_Traceback
-                 (Trace (1 .. Length)));
-         end;
-         raise;
 
    end Main;
 
