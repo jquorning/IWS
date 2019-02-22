@@ -1,18 +1,16 @@
+--
+--  The author disclaims copyright to this source code.  In place of
+--  a legal notice, here is a blessing:
+--
+--    May you do good and not evil.
+--    May you find forgiveness for yourself and forgive others.
+--    May you share freely, not taking more than you give.
+--
 
-# This is a comment
- # This too
-
-jesperq.net  # end of line comment
-hornsletkirke.dk
-
--- Empty lines are ignored
--- This is a comment three
-   -- Even with indention
-
-ckirken.dk  -- Also end of line comment
+gaws.org      --  GAWS own local home page
+example.com
+jesperq.net   --  end of line comment
 wedonu.dk
 autotrof.dk
-gaws.org
-example.com
 
 
