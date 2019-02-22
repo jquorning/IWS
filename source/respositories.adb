@@ -106,6 +106,7 @@ package body Respositories is
    is
       pragma Unreferenced (Respository);
       use AWS;
+      use AWS.MIME;
       use DK8543.AWS.Status;
       use DK8543.AWS.MIME;
       Data      : AWS.Response.Data;
@@ -130,30 +131,31 @@ package body Respositories is
          New_Line;
       end;
 
-      if
-        URI = "/stylesheets/print.css" or
-        URI = "/stylesheets/main.css" or
-        URI = "/stylesheets/boilerplate.css"
-      then
+      if URI = "/" then
          Data := AWS.Response.Build
-           (AWS.MIME.Text_CSS,
-            Message_Body => Templates.Parse (Host_Base & "stylesheets/" & File_Name));
+           (AWS.MIME.Text_HTML,
+            Message_Body => AWS.Templates.Parse (Host_Base & "static/main.html"));
 
       elsif URI = "/favicon.ico" then
          Data := AWS.Response.Build
            (AWS.MIME.Text_HTML, Message_Body
               => Templates.Parse (Host_Base & "image/favicon.ico"));
 
-      elsif URI = "/" then
-         Data := AWS.Response.Build
-           (AWS.MIME.Text_HTML,
-            Message_Body => AWS.Templates.Parse (Host_Base & "static/main.html"));
-
       elsif URI = "/test" then
          Data := AWS.Response.Build
            (AWS.MIME.Text_HTML,
             Message_Body => "<html><head><title>Test</title></head>" &
               "<body><h1>Test</html>");
+
+      elsif MIME = Text_HTML then
+         Data := AWS.Response.Build
+           (AWS.MIME.Text_HTML,
+            Message_Body => AWS.Templates.Parse (Host_Base & URI));
+
+      elsif MIME = Text_CSS then
+         Data := AWS.Response.Build
+           (AWS.MIME.Text_CSS,
+            Message_Body => Templates.Parse (Host_Base & URI));
 
       else
          Ada.Text_IO.Put_Line ("URI is " & URI);
