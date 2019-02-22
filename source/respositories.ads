@@ -19,9 +19,8 @@ package Respositories is
 
    type T_Respository is private;
 
-   function Create_Respository
-     (Host : in S_Host_Name) return T_Respository;
-   --  Create respository for host.
+   procedure Append_Respository (Host_Name : in S_Host_Name);
+   --  Append serving host with Host_Name to list of host.
 
    function Delegate (Request : in AWS.Status.Data)
                      return AWS.Response.Data;

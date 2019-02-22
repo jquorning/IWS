@@ -58,23 +58,22 @@ package body Respositories is
       end record;
 
 
-   function Create_Respository
-     (Host : in S_Host_Name) return T_Respository
+   procedure Append_Respository (Host_Name : in S_Host_Name)
    is
       use Ada.Directories;
       use Ada.Strings.Unbounded;
    begin
-      if not Ada.Directories.Exists (Host) then
+      if not Ada.Directories.Exists (Host_Name) then
          raise Constraint_Error
-           with "Web directory '" & Host & "' does not exist.";
+           with "Web directory '" & Host_Name & "' does not exist.";
       end if;
       declare
-         Respository : constant T_Respository := new R_Respository;
+         Host_Unbound : constant Unbounded_String := To_Unbounded_String (Host_Name);
+         Respository  : constant T_Respository    := new R_Respository;
       begin
-         Respository_Maps.Insert (Map, To_Unbounded_String (Host), Respository);
-         return Respository;
+         Respository_Maps.Insert (Map, Host_Unbound, Respository);
       end;
-   end Create_Respository;
+   end Append_Respository;
 
 
    function Delegate (Request : in AWS.Status.Data)

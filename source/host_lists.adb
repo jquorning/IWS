@@ -16,7 +16,7 @@ with DK8543.Errors;
 
 with Setup;
 with Respositories;
-with Web_Server;
+--  with Web_Server;
 
 package body Host_Lists is
 
@@ -56,7 +56,7 @@ package body Host_Lists is
          begin
             Line_Number := Line_Number + 1;
             if Host_Name /= "" then
-               Web_Server.Example := Respositories.Create_Respository (Host_Name);
+               Respositories.Append_Respository (Host_Name);
                Put (Setup.Get_Program_Name);
                Put (": Respository for '");
                Put (Host_Name);
