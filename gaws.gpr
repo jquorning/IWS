@@ -18,7 +18,7 @@ project GAWS is
 
   for Languages    use ("Ada");
   for Source_Dirs  use ("source/");
-  for Object_Dir   use ".object/";
+  for Object_Dir   use "object/";
   for Exec_Dir     use "binary/";
   for Main         use ("gaws_program.adb");
 

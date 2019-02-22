@@ -1,5 +1,5 @@
 .gitignore
-.object/
+object/
 binary/gaws
 source/setup.adb
 respository/gaws.log
