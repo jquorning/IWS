@@ -13,7 +13,6 @@ with GNAT.Traceback.Symbolic;
 
 with DK8543.AWS.Status;
 
---  with Web_Server;
 with Respositories;
 
 package body Web_Callbacks is
@@ -41,9 +40,6 @@ package body Web_Callbacks is
 
       --  Asyncronous
       --  Web_Databases.Service_Request (Web_Server.Example, Request);
-
-      --  Syncronous
-      --  return Respositories.Serve_Page (Web_Server.Example, Request);
 
       --  Syncronous delegation
       return Respositories.Delegate (Request);

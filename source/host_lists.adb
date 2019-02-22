@@ -16,7 +16,6 @@ with DK8543.Errors;
 
 with Setup;
 with Respositories;
---  with Web_Server;
 
 package body Host_Lists is
 
@@ -39,7 +38,6 @@ package body Host_Lists is
    procedure Register_Hosts (Hosts_File : in String)
    is
       use Ada.Text_IO;
---      use Ada.Strings.Unbounded;
       Exists     : constant Boolean := Ada.Directories.Exists (Hosts_File);
       File       : File_Type;
       Line_Number : Natural := 0;
