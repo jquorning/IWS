@@ -18,6 +18,8 @@ with AWS.Templates;
 with DK8543.AWS.Status;
 with DK8543.AWS.MIME;
 
+with GAWS_Log;
+
 package body Respositories is
 
 
@@ -117,19 +119,7 @@ package body Respositories is
       MIME      : constant String := To_MIME (Extension);
       Host_Base : constant String := Respository_Base & Host & "/";
    begin
-      declare
-         use Ada.Text_IO;
-      begin
-         Put ("Host: ");
-         Put (Host);
-         Put ("    ");
-         Put ("MIME: ");
-         Put (MIME);
-         Put ("    ");
-         Put ("URI: ");
-         Put (URI);
-         New_Line;
-      end;
+      GAWS_Log.Put_Line (Host & "  " & URI & "  " & MIME);
 
       if URI = "/" then
          Data := AWS.Response.Build

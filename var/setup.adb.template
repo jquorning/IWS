@@ -63,4 +63,16 @@ package body Setup is
    end Get_Uname_S;
 
 
+   function Get_Uname return String
+   is
+   begin
+      return
+        Get_Uname_S & " " &
+        Get_Uname_N & " " &
+        Get_Uname_R & " " &
+        Get_Uname_P & " " &
+        Get_Uname_M;
+   end Get_Uname;
+
+
 end Setup;

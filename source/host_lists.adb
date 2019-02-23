@@ -14,6 +14,7 @@ with Ada.Exceptions;
 with DK8543.Text.Comments;
 with DK8543.Errors;
 
+with GAWS_Log;
 with Respositories;
 
 package body Host_Lists is
@@ -54,12 +55,7 @@ package body Host_Lists is
             Line_Number := Line_Number + 1;
             if Host_Name /= "" then
                Respositories.Append_Respository (Host_Name);
-               --  Put into log instead
---                 Put (Setup.Get_Program_Name);
---                 Put (": Respository for '");
---                 Put (Host_Name);
---                 Put ("' registered.");
---                 New_Line;
+               GAWS_Log.Put_Line ("Registered '" & Host_Name & "'.");
             end if;
 
          exception

@@ -1,6 +1,5 @@
-* Use AWS log
-* Make tagged type for T_Respository (look at AWS plugins)
 * Wiki on GitHub
+* Make tagged type for T_Respository (look at AWS plugins)
 * Redirect gaws.org til GitHub Wiki about GAWS
 * Get css working for example.com:8088
 * Template tags like SYSTEM_PROGRAM_NAME, PAGE_NAME, PAGE_HOST_NAME in separate maps for system and page

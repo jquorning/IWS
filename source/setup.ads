@@ -17,5 +17,6 @@ package Setup is
    function Get_Uname_P return String;
    function Get_Uname_R return String;
    function Get_Uname_S return String;
+   function Get_Uname   return String;
 
 end Setup;
