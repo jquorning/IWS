@@ -64,20 +64,29 @@ package body Respositories is
       end record;
 
 
-   procedure Append_Respository (Host_Name : in S_Host_Name)
+   procedure Append_Respository (Host_Name : in     S_Host_Name;
+                                 Success   :    out Boolean)
    is
       use Ada.Directories;
       use Ada.Strings.Unbounded;
    begin
+      Success := False;
+
       if not Ada.Directories.Exists (Host_Name) then
-         raise Constraint_Error
-           with "Web directory '" & Host_Name & "' does not exist.";
+         return;
       end if;
+
       declare
+         use Respository_Maps;
          Host_Unbound : constant Unbounded_String := To_Unbounded_String (Host_Name);
          Respository  : constant T_Respository    := new R_Respository;
       begin
-         Respository_Maps.Insert (Map, Host_Unbound, Respository);
+         if Find (Map, Host_Unbound) = No_Element then
+            Insert (Map, Host_Unbound, Respository);
+            Success := True;
+         else
+            Success := False;
+         end if;
       end;
    end Append_Respository;
 

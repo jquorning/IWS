@@ -14,6 +14,7 @@ with Ada.Exceptions;
 with DK8543.Text.Comments;
 with DK8543.Errors;
 
+with Options;
 with GAWS_Log;
 with Respositories;
 
@@ -21,11 +22,13 @@ package body Host_Lists is
 
 
    function Get_Host
-     (From_File : in out Ada.Text_IO.File_Type) return String;
+     (From_File : in out Ada.Text_IO.File_Type)
+     return String;
 
 
-   function Get_Host (From_File : in out Ada.Text_IO.File_Type)
-                     return String
+   function Get_Host
+     (From_File : in out Ada.Text_IO.File_Type)
+     return String
    is
       use DK8543.Text.Comments;
       Line_Raw  : constant String := Ada.Text_IO.Get_Line (From_File);
@@ -35,27 +38,43 @@ package body Host_Lists is
 
 
 
-   procedure Register_Hosts (Hosts_File : in String)
+   procedure Register_Hosts (Success : out Boolean)
    is
       use Ada.Text_IO;
-      Exists     : constant Boolean := Ada.Directories.Exists (Hosts_File);
-      File       : File_Type;
+      Hosts_File  : constant String  := Options.Host_List_File.all;
+      Exists      : constant Boolean := Ada.Directories.Exists (Hosts_File);
+      File        : File_Type;
+      All_Success : Boolean := True;
       Line_Number : Natural := 0;
    begin
+      Success := False;
+
+      GAWS_Log.Put_Line ("Registering hosts");
+      GAWS_Log.Put_Horizontal_Line;
+
       if not Exists then
-         raise Constraint_Error
-           with "Hosts file " & Hosts_File & " does not exist.";
+         GAWS_Log.Put_Line ("ERROR: Hosts file '" & Hosts_File & "' not found.");
+         return;
       end if;
 
       Open (File, In_File, Hosts_File);
       loop
          declare
-            Host_Name : constant String := Get_Host (File);
+            Host_Name      : constant String := Get_Host (File);
+            Append_Success : Boolean;
          begin
             Line_Number := Line_Number + 1;
+
             if Host_Name /= "" then
-               Respositories.Append_Respository (Host_Name);
-               GAWS_Log.Put_Line ("Registered '" & Host_Name & "'.");
+               Respositories.Append_Respository (Host_Name, Append_Success);
+
+               if Append_Success then
+                  GAWS_Log.Put_Line ("Registered '" & Host_Name & "'.");
+               else
+                  All_Success := False;
+                  GAWS_Log.Put_Line ("ERROR: Registering '" & Host_Name & "' failed.");
+               end if;
+
             end if;
 
          exception
@@ -71,6 +90,8 @@ package body Host_Lists is
 
       when End_Error =>
          Close (File);
+         GAWS_Log.Put_Horizontal_Line;
+         Success := All_Success;
 
    end Register_Hosts;
 

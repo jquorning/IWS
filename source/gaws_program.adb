@@ -11,7 +11,7 @@ with Ada.Command_Line;
 
 with Command_Line;
 with Options;
-with Exceptions;
+--  with Exceptions;
 with Program;
 with GAWS_IO;
 
@@ -43,10 +43,5 @@ begin
    end if;
 
    Program.Run;
-
-exception
-
-   when Occurrence : others =>
-      Exceptions.Put (Occurrence);
 
 end GAWS_Program;

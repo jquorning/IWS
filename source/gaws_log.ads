@@ -15,7 +15,11 @@ package GAWS_Log is
 
    procedure Start;
    procedure Stop;
-   procedure Put_Line (Item : in String);
    procedure Flush;
+
+   procedure Put_Horizontal_Line (Length : in Natural   := 60;
+                                  Marker : in Character := '-');
+   procedure Put_Line (Item : in String);
+   procedure Put_Register_Hosts (Success : in Boolean);
 
 end GAWS_Log;

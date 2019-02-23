@@ -32,9 +32,11 @@ project GAWS is
         "-gnatf",
         "-gnatwa",
         "-gnatwj",
+        "-gnatw.x",
         "-gnat2012",
         "-gnaty",
-        "-gnatyM99");
+        "-gnatyM99"
+       );
 
      for Executable ("gaws_program.adb")
        use "gaws";

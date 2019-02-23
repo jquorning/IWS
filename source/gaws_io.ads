@@ -19,5 +19,4 @@ package GAWS_IO is
    procedure Put_Blessing;
    --  Put blessing to terminal.
 
-
 end GAWS_IO;

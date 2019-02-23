@@ -23,6 +23,7 @@ package body GAWS_Log is
              Filename_Prefix => "GAWSLOG",
              Auto_Flush      => True);
 
+      GAWS_Log.Put_Horizontal_Line;
       GAWS_IO.Put_Version (To_Log => True);
    end Start;
 
@@ -34,6 +35,22 @@ package body GAWS_Log is
    end Stop;
 
 
+   procedure Flush
+   is
+   begin
+      Flush (Log);
+   end Flush;
+
+
+   procedure Put_Horizontal_Line (Length : in Natural   := 60;
+                                  Marker : in Character := '-')
+   is
+      Line : constant String (1 .. Length) := (others => Marker);
+   begin
+      Put_Line (Line);
+   end Put_Horizontal_Line;
+
+
    procedure Put_Line (Item : in String)
    is
    begin
@@ -41,11 +58,14 @@ package body GAWS_Log is
    end Put_Line;
 
 
-   procedure Flush
+   procedure Put_Register_Hosts (Success : in Boolean)
    is
    begin
-      Flush (Log);
-   end Flush;
+      case Success is
+         when True  =>  Put_Line ("Registered all host successfully");
+         when False =>  Put_Line ("ERROR: One or more hosts failed to register");
+      end case;
+   end Put_Register_Hosts;
 
 
 end GAWS_Log;

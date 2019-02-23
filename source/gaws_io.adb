@@ -36,7 +36,7 @@ package body GAWS_IO is
          when True =>
             GAWS_Log.Put_Line (Version_Image & " " & Build_Image);
             GAWS_Log.Put_Line (Uname_Image);
-
+            GAWS_Log.Put_Horizontal_Line (Marker => '=');
       end case;
    end Put_Version;
 

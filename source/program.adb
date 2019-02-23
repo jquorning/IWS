@@ -8,7 +8,6 @@
 --
 
 with GAWS_Log;
-with Options;
 with Host_Lists;
 with Web_Server;
 
@@ -16,9 +15,14 @@ package body Program is
 
    procedure Run
    is
+      Register_Success : Boolean;
    begin
       GAWS_Log.Start;
-      Host_Lists.Register_Hosts (Hosts_File => Options.Host_List_File.all);
+
+      --  Register hosts
+      Host_Lists.Register_Hosts (Register_Success);
+      GAWS_Log.Put_Register_Hosts (Register_Success);
+
       Web_Server.Startup;
       Web_Server.Work_Until_Stopped;
       Web_Server.Shutdown;

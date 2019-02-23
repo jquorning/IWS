@@ -7,7 +7,6 @@
 --    May you share freely, not taking more than you give.
 --
 
-
 package Program is
 
    procedure Run;
