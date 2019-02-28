@@ -11,7 +11,7 @@
 
 with "AWS";
 
-with "../DK8543/dk8543.gpr";
+with "../DK8543/dk8543_core.gpr";
 with "../DK8543/dk8543_aws.gpr";
 
 project GAWS is
