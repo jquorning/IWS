@@ -11,6 +11,7 @@ with Ada.Strings.Unbounded;
 
 with AWS.Status;
 with AWS.Response;
+with AWS.Services.Dispatchers.Virtual_Host;
 
 package Virtual_Hosts is
 
@@ -35,9 +36,23 @@ package Virtual_Hosts is
                        return AWS.Response.Data;
    --  Syncronous old style serve page.
 
+
+   type Virtual_Host_Dispatcher is
+     new AWS.Services.Dispatchers.Virtual_Host.Handler with
+     null record;
+
+   overriding function Dispatch
+     (Dispatcher : Virtual_Host_Dispatcher;
+      Request    : AWS.Status.Data)
+     return AWS.Response.Data;
+   --  Returns an error message (code 404) if there is no match for the request
+
+
+   Dispatcher : Virtual_Host_Dispatcher;
+
 private
 
-   type R_Respository;
-   type T_Respository is access all R_Respository;
+   type C_Respository;
+   type T_Respository is access all C_Respository'Class;
 
 end Virtual_Hosts;

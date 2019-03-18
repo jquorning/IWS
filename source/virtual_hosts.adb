@@ -58,16 +58,34 @@ package body Virtual_Hosts is
 
    Map : Respository_Maps.Map;
 
-   type R_Respository is
-      record
-         null;
-      end record;
+   type C_Respository is
+     new AWS.Services.Dispatchers.Virtual_Host.Handler with
+     null record;
+
+
+
+
+   overriding function Dispatch
+     (Dispatcher : Virtual_Host_Dispatcher;
+      Request    : AWS.Status.Data)
+     return AWS.Response.Data
+   is
+      pragma Unreferenced (Dispatcher);
+
+      use Ada.Text_IO;
+      use DK8543.AWS.Status;
+
+      Host_Name : constant String := Host_Part (AWS.Status.Host (Request));
+   begin
+      Put_Line ("C_Respository.Dispatch");
+      Put_Line ("  Host_Name: " & Host_Name);
+      return Delegate (Request);
+   end Dispatch;
 
 
    procedure Append_Respository (Host_Name : in     S_Host_Name;
                                  Success   :    out Boolean)
    is
-      use Ada.Directories;
       use Ada.Strings.Unbounded;
    begin
       Success := False;
@@ -78,11 +96,18 @@ package body Virtual_Hosts is
 
       declare
          use Respository_Maps;
+
          Host_Unbound : constant Unbounded_String := To_Unbounded_String (Host_Name);
-         Respository  : constant T_Respository    := new R_Respository;
+         Respository  : C_Respository;
       begin
          if Find (Map, Host_Unbound) = No_Element then
-            Insert (Map, Host_Unbound, Respository);
+            --  Insert (Map, Host_Unbound, Respository);
+
+            Register
+              (Dispatcher,
+               Host_Name,
+               Respository);
+
             Success := True;
          else
             Success := False;
