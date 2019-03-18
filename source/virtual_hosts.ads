@@ -27,12 +27,7 @@ package Virtual_Hosts is
                                  Success   :    out Boolean);
    --  Append serving host with Host_Name to list of host.
 
-   function Delegate (Request : in AWS.Status.Data)
-                     return AWS.Response.Data;
-   --  Deletate Request out to the respository and get responce back.
-
-   function Serve_Page (Respository : in T_Respository;
-                        Request     : in AWS.Status.Data)
+   function Serve_Page (Request     : in AWS.Status.Data)
                        return AWS.Response.Data;
    --  Syncronous old style serve page.
 

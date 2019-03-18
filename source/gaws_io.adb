@@ -60,7 +60,7 @@ package body GAWS_IO is
       use Ada.Text_IO;
    begin
       Put (Setup.Get_Program_Name);
-      Put (": Try http://gaws.org:8088");
+      Put (": Try http://www2.example.com:8080");
       New_Line;
 
       Put (Setup.Get_Program_Name);
