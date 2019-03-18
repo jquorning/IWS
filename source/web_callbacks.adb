@@ -9,7 +9,7 @@
 
 with DK8543.AWS.Status;
 
-with Respositories;
+with Virtual_Hosts;
 
 package body Web_Callbacks is
 
@@ -38,7 +38,7 @@ package body Web_Callbacks is
       --  Web_Databases.Service_Request (Web_Server.Example, Request);
 
       --  Syncronous delegation
-      return Respositories.Delegate (Request);
+      return Virtual_Hosts.Delegate (Request);
 
    end Main;
 

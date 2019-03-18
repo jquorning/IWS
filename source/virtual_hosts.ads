@@ -12,7 +12,7 @@ with Ada.Strings.Unbounded;
 with AWS.Status;
 with AWS.Response;
 
-package Respositories is
+package Virtual_Hosts is
 
    Unknown_Host : exception;
    --  Host is not known
@@ -40,4 +40,4 @@ private
    type R_Respository;
    type T_Respository is access all R_Respository;
 
-end Respositories;
+end Virtual_Hosts;

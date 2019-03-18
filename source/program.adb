@@ -8,7 +8,7 @@
 --
 
 with GAWS_Log;
-with Host_Lists;
+with Config_File;
 with Web_Server;
 
 package body Program is
@@ -20,7 +20,7 @@ package body Program is
       GAWS_Log.Start;
 
       --  Register hosts
-      Host_Lists.Register_Hosts (Register_Success);
+      Config_File.Register_Hosts (Register_Success);
       GAWS_Log.Put_Register_Hosts (Register_Success);
 
       Web_Server.Startup;

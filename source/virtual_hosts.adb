@@ -20,7 +20,7 @@ with DK8543.AWS.MIME;
 
 with GAWS_Log;
 
-package body Respositories is
+package body Virtual_Hosts is
 
 
    Respository_Base : constant String := "../respository/";
@@ -168,4 +168,4 @@ package body Respositories is
    end Serve_Page;
 
 
-end Respositories;
+end Virtual_Hosts;

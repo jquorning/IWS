@@ -12,6 +12,7 @@ with Ada.Text_IO;
 with AWS.Config;
 with AWS.Server.Log;
 with AWS.Services.Page_Server;
+with AWS.Services.Dispatchers.Virtual_Host;
 
 with Setup;
 with Web_Callbacks;

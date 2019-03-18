@@ -9,16 +9,16 @@
 
 with Ada.Text_IO;
 with Ada.Directories;
-with Ada.Exceptions;
+--  with Ada.Exceptions;
 
-with DK8543.Text.Comments;
-with DK8543.Errors;
+with DK8543.Strings.Comments;
+--  with DK8543.Errors;
 
 with Options;
 with GAWS_Log;
-with Respositories;
+with Virtual_Hosts;
 
-package body Host_Lists is
+package body Config_File is
 
 
    function Get_Host
@@ -30,7 +30,8 @@ package body Host_Lists is
      (From_File : in out Ada.Text_IO.File_Type)
      return String
    is
-      use DK8543.Text.Comments;
+      use DK8543.Strings.Comments;
+
       Line_Raw  : constant String := Ada.Text_IO.Get_Line (From_File);
    begin
       return Trim_Comments (Line_Raw);
@@ -66,7 +67,7 @@ package body Host_Lists is
             Line_Number := Line_Number + 1;
 
             if Host_Name /= "" then
-               Respositories.Append_Respository (Host_Name, Append_Success);
+               Virtual_Hosts.Append_Respository (Host_Name, Append_Success);
 
                if Append_Success then
                   GAWS_Log.Put_Line ("Registered '" & Host_Name & "'.");
@@ -77,12 +78,13 @@ package body Host_Lists is
 
             end if;
 
-         exception
-
-            when Occ : Constraint_Error =>
-               DK8543.Errors.Error
-                 (Hosts_File, Line_Number,
-                  Ada.Exceptions.Exception_Message (Occ));
+--         exception
+--
+--              when Occ : Constraint_Error =>
+--                 raise;
+--             DK8543.Errors.Error
+--                 (Hosts_File, Line_Number,
+--                  Ada.Exceptions.Exception_Message (Occ));
          end;
       end loop;
 
@@ -96,4 +98,4 @@ package body Host_Lists is
    end Register_Hosts;
 
 
-end Host_Lists;
+end Config_File;
