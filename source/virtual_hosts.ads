@@ -11,8 +11,9 @@ with Ada.Strings.Unbounded;
 
 with AWS.Status;
 with AWS.Response;
+with AWS.Services.Dispatchers.Virtual_Host;
 
-package Respositories is
+package Virtual_Hosts is
 
    Unknown_Host : exception;
    --  Host is not known
@@ -26,18 +27,27 @@ package Respositories is
                                  Success   :    out Boolean);
    --  Append serving host with Host_Name to list of host.
 
-   function Delegate (Request : in AWS.Status.Data)
-                     return AWS.Response.Data;
-   --  Deletate Request out to the respository and get responce back.
-
-   function Serve_Page (Respository : in T_Respository;
-                        Request     : in AWS.Status.Data)
+   function Serve_Page (Request     : in AWS.Status.Data)
                        return AWS.Response.Data;
    --  Syncronous old style serve page.
 
+
+   type Virtual_Host_Dispatcher is
+     new AWS.Services.Dispatchers.Virtual_Host.Handler with
+     null record;
+
+   overriding function Dispatch
+     (Dispatcher : Virtual_Host_Dispatcher;
+      Request    : AWS.Status.Data)
+     return AWS.Response.Data;
+   --  Returns an error message (code 404) if there is no match for the request
+
+
+   Dispatcher : Virtual_Host_Dispatcher;
+
 private
 
-   type R_Respository;
-   type T_Respository is access all R_Respository;
+   type C_Respository;
+   type T_Respository is access all C_Respository'Class;
 
-end Respositories;
+end Virtual_Hosts;

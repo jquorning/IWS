@@ -7,8 +7,8 @@
 --    May you share freely, not taking more than you give.
 --
 
-package Host_Lists is
+package Config_File is
 
    procedure Register_Hosts (Success : out Boolean);
 
-end Host_Lists;
+end Config_File;

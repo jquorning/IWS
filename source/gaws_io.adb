@@ -17,7 +17,7 @@ package body GAWS_IO is
 
    procedure Put_Version (To_Log : in Boolean := False)
    is
-      use Ada.Text_IO, Setup;
+      use Ada.Text_IO;
       Program       : constant String := Setup.Get_Program_Name;
       Version       : constant String := Setup.Get_Program_Version;
       Timestamp     : constant String := Setup.Get_Build_ISO8601_UTC;
@@ -57,10 +57,10 @@ package body GAWS_IO is
 
    procedure Put_Hints
    is
-      use Ada.Text_IO, Setup;
+      use Ada.Text_IO;
    begin
       Put (Setup.Get_Program_Name);
-      Put (": Try http://gaws.org:8088");
+      Put (": Try http://www2.example.com:8080");
       New_Line;
 
       Put (Setup.Get_Program_Name);

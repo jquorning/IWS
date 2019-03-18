@@ -1,4 +1,4 @@
 #!/bin/sh
 
 cd $HOME/Projekt/GAWS/respository
-../binary/gaws --port=8088 --host-list=../var/gaws.hosts $1
+gaws --port=8088 --host-list=../var/gaws.hosts $1

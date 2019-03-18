@@ -13,10 +13,6 @@ with AWS.Config;
 with AWS.Server.Log;
 with AWS.Services.Page_Server;
 
-with Setup;
-with Web_Callbacks;
-with Options;
-
 package body Web_Server is
 
    Server : AWS.Server.HTTP;
@@ -38,18 +34,15 @@ package body Web_Server is
          AWS.Server.Log.Start_Error (Server);
       end if;
 
-      Web_Callbacks.Initialize;
-
       AWS.Server.Start
-        (Server,
-         Name     => Setup.Get_Program_Name,
-         Callback => Web_Callbacks.Main'Access,
-         Port     => Integer'Value (Options.TCP_IP_Port.all));
+        (Web_Server => Server,
+         Dispatcher => Virtual_Hosts.Dispatcher,
+         Config     => Config);
+
    end Startup;
 
 
    procedure Work_Until_Stopped is
-      use Ada.Text_IO;
       use AWS.Server;
    begin
       Wait (Forever);
