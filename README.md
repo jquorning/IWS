@@ -1,4 +1,4 @@
-# GAWS - General Ada Web Server
+# Gauss - A web service
 
 ## Status
 Initial
